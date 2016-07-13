@@ -30,10 +30,10 @@ set :repo_url, 'git@github.com:shiva-chaganti/test_app.git'
  set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system')
 
 
-set :rbenv_type, :user
+set :rbenv_type, :system
 set :rbenv_ruby, '2.3.0'
-set :rbenv_custom_path, '/root/.rbenv/bin/'
-set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_custom_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_custom_path)}/rbenv exec"
+#set :rbenv_custom_path, '/root/.rbenv/bin/'
+set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all # default value
 
@@ -42,19 +42,17 @@ set :passenger_environment_variables, { :path => '/root/.rbenv/shims/passenger:$
 set :passenger_restart_command, '/root/.rbenv/shims/passenger-config restart-app'
 
 # Default value for default_env is {}
- set :default_env, { path: "/opt/ruby/bin:$PATH" }
+#set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
-task :set_env do
-  run "cd  && source .bash_profile"
-end
+
 
 
 namespace :deploy do
   
-  before :set_env
+
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
       # Here we can do anything such as:
