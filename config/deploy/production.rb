@@ -52,7 +52,7 @@ role :db,  '54.200.235.92'
 #  }
 #
 set :ssh_options, {
-  keys: %w(/home/ubuntu/rails_projects),
+  keys: %w(/home/ubuntu/rails_projects/aws_ubuntu.pem),
   forward_agent: false,
   auth_methods: %w(publickey password)
 }
