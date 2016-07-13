@@ -7,6 +7,10 @@
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
 # server 'db.example.com', user: 'deploy', roles: %w{db}
 
+role :app, '54.200.235.92'
+role :web, '54.200.235.92'
+role :db,  '54.200.235.92'
+
 
 
 # role-based syntax
@@ -47,6 +51,12 @@
 #    auth_methods: %w(password)
 #  }
 #
+set :ssh_options, {
+  keys: %w(/home/ubuntu/rails_projects),
+  forward_agent: false,
+  auth_methods: %w(publickey password)
+}
+
 # The server-based syntax can be used to override options:
 # ------------------------------------
 # server 'example.com',
