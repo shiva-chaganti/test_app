@@ -47,8 +47,14 @@ set :passenger_restart_command, '/root/.rbenv/shims/passenger-config restart-app
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
-namespace :deploy do
+task :set_env do
+  run "cd  && source .bash_profile"
+end
 
+
+namespace :deploy do
+  
+  before :set_env
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
       # Here we can do anything such as:
